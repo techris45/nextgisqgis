@@ -181,7 +181,7 @@ void QgsBrowserModel::removeRootItems()
 Qt::ItemFlags QgsBrowserModel::flags( const QModelIndex & index ) const
 {
   if ( !index.isValid() )
-    return nullptr;
+    return Qt::ItemFlags();
 
   Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 
@@ -410,7 +410,6 @@ void QgsBrowserModel::itemDataChanged( QgsDataItem * item )
 }
 void QgsBrowserModel::itemStateChanged( QgsDataItem * item, QgsDataItem::State oldState )
 {
-  QgsDebugMsg( "Entered" );
   if ( !item )
     return;
   QModelIndex idx = findItem( item );
@@ -503,7 +502,6 @@ bool QgsBrowserModel::canFetchMore( const QModelIndex & parent ) const
 
 void QgsBrowserModel::fetchMore( const QModelIndex & parent )
 {
-  QgsDebugMsg( "Entered" );
   QgsDataItem* item = dataItem( parent );
 
   if ( !item || item->state() == QgsDataItem::Populating || item->state() == QgsDataItem::Populated )

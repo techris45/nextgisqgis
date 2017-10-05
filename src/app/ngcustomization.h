@@ -50,6 +50,7 @@ protected:
     virtual void updateProjectFromTemplates() override;
     virtual void toggleLogMessageIcon(bool hasLogMessage) override;
     virtual void initLayerTreeView() override;
+    virtual void functionProfile( void ( NGQgisApp::*fnc )(), NGQgisApp *instance, QString name );
     virtual void saveRecentProjectPath(const QString &projectPath,
                                        bool savePreviewImage = true) override;
     virtual void fileNewFromDefaultTemplate() override;

@@ -134,7 +134,7 @@ option(WITH_DESKTOP "Build desktop components" ON)
 option(WITH_BINDINGS "Build python bindings" ON)
 include(FindAnyProject)
 
-if(NOT PREPARE_ONLY)
+#if(NOT PREPARE_ONLY)
     # Search dependencies
     set(CMAKE_AUTOMOC ON)
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -171,7 +171,10 @@ if(NOT PREPARE_ONLY)
     #the test data. See CMakeLists in test dirs for more info
     #TEST_DATA_DIR is also used by QgsRenderChecker currently in core
     set (TEST_DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tests/testdata")
-endif()
+#else()
+#    find_anyproject(GEOS REQUIRED)
+#    find_anyproject(Qt4 REQUIRED COMPONENTS QtCore QtGui QtXml QtNetwork QtSvg QtSql QtUiTools QtScript)
+#endif()
 
 if(WITH_BINDINGS)
     # This is here as src/python
@@ -189,7 +192,14 @@ endif()
 IF(MSVC)
   # disable macros that offend std::numeric_limits<T>::min()/max()
   ADD_DEFINITIONS(-DNOMINMAX)
+  
+  IF (MSVC_VERSION LESS 1900)
+    ADD_DEFINITIONS(-D_ALLOW_KEYWORD_MACROS)
+    ADD_DEFINITIONS("-Dnoexcept=")
+  ENDIF()
 ENDIF(MSVC)
+
+
 
 add_subdirectory(src)
 if(NOT PREPARE_ONLY)

@@ -1,6 +1,6 @@
-#line 2 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/flex_qgsrastercalclexer.cpp"
+#line 2 "C:/builds/nextgisqgis-dev/qgis/src/analysis/flex_qgsrastercalclexer.cpp"
 
-#line 4 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/flex_qgsrastercalclexer.cpp"
+#line 4 "C:/builds/nextgisqgis-dev/qgis/src/analysis/flex_qgsrastercalclexer.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -66,7 +66,6 @@ typedef int16_t flex_int16_t;
 typedef uint16_t flex_uint16_t;
 typedef int32_t flex_int32_t;
 typedef uint32_t flex_uint32_t;
-typedef uint64_t flex_uint64_t;
 #else
 typedef signed char flex_int8_t;
 typedef short int flex_int16_t;
@@ -74,7 +73,6 @@ typedef int flex_int32_t;
 typedef unsigned char flex_uint8_t; 
 typedef unsigned short int flex_uint16_t;
 typedef unsigned int flex_uint32_t;
-#endif /* ! C99 */
 
 /* Limits of integral types. */
 #ifndef INT8_MIN
@@ -104,6 +102,8 @@ typedef unsigned int flex_uint32_t;
 #ifndef UINT32_MAX
 #define UINT32_MAX             (4294967295U)
 #endif
+
+#endif /* ! C99 */
 
 #endif /* ! FLEXINT_H */
 
@@ -161,7 +161,15 @@ typedef unsigned int flex_uint32_t;
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k.
+ * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
+ * Ditto for the __ia64__ case accordingly.
+ */
+#define YY_BUF_SIZE 32768
+#else
 #define YY_BUF_SIZE 16384
+#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -173,12 +181,7 @@ typedef unsigned int flex_uint32_t;
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 #endif
 
-#ifndef YY_TYPEDEF_YY_SIZE_T
-#define YY_TYPEDEF_YY_SIZE_T
-typedef size_t yy_size_t;
-#endif
-
-extern yy_size_t rasterleng;
+extern int rasterleng;
 
 extern FILE *rasterin, *rasterout;
 
@@ -204,6 +207,11 @@ extern FILE *rasterin, *rasterout;
 
 #define unput(c) yyunput( c, (yytext_ptr)  )
 
+#ifndef YY_TYPEDEF_YY_SIZE_T
+#define YY_TYPEDEF_YY_SIZE_T
+typedef size_t yy_size_t;
+#endif
+
 #ifndef YY_STRUCT_YY_BUFFER_STATE
 #define YY_STRUCT_YY_BUFFER_STATE
 struct yy_buffer_state
@@ -221,7 +229,7 @@ struct yy_buffer_state
 	/* Number of characters read into yy_ch_buf, not including EOB
 	 * characters.
 	 */
-	yy_size_t yy_n_chars;
+	int yy_n_chars;
 
 	/* Whether we "own" the buffer - i.e., we know we created it,
 	 * and can realloc() it to grow it, and should free() it to
@@ -291,8 +299,8 @@ static YY_BUFFER_STATE * yy_buffer_stack = 0; /**< Stack as an array. */
 
 /* yy_hold_char holds the character lost when rastertext is formed. */
 static char yy_hold_char;
-static yy_size_t yy_n_chars;		/* number of characters read into yy_ch_buf */
-yy_size_t rasterleng;
+static int yy_n_chars;		/* number of characters read into yy_ch_buf */
+int rasterleng;
 
 /* Points to current character in buffer. */
 static char *yy_c_buf_p = (char *) 0;
@@ -320,7 +328,7 @@ static void raster_init_buffer (YY_BUFFER_STATE b,FILE *file  );
 
 YY_BUFFER_STATE raster_scan_buffer (char *base,yy_size_t size  );
 YY_BUFFER_STATE raster_scan_string (yyconst char *yy_str  );
-YY_BUFFER_STATE raster_scan_bytes (yyconst char *bytes,yy_size_t len  );
+YY_BUFFER_STATE raster_scan_bytes (yyconst char *bytes,int len  );
 
 void *rasteralloc (yy_size_t  );
 void *rasterrealloc (void *,yy_size_t  );
@@ -378,7 +386,7 @@ static void yy_fatal_error (yyconst char msg[]  );
  */
 #define YY_DO_BEFORE_ACTION \
 	(yytext_ptr) = yy_bp; \
-	rasterleng = (yy_size_t) (yy_cp - yy_bp); \
+	rasterleng = (size_t) (yy_cp - yy_bp); \
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
@@ -551,7 +559,7 @@ int raster_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *rastertext;
-#line 1 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 1 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 /***************************************************************************
                           qgsrastercalclexer.ll
           Rules for lexical analysis of raster calc strings done by Flex
@@ -569,7 +577,7 @@ char *rastertext;
  *                                                                         *
  ***************************************************************************/
 // ensure that lexer will be 8-bit (and not just 7-bit)
-#line 28 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 28 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
   //directly included in the output program
   #include "qgsrastercalcnode.h"
   #include "qgsrastercalcparser.hpp"
@@ -581,7 +589,7 @@ char *rastertext;
   #ifdef _MSC_VER
   #define YY_NO_UNISTD_H
   #endif
-#line 585 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/flex_qgsrastercalclexer.cpp"
+#line 593 "C:/builds/nextgisqgis-dev/qgis/src/analysis/flex_qgsrastercalclexer.cpp"
 
 #define INITIAL 0
 
@@ -620,7 +628,7 @@ FILE *rasterget_out (void );
 
 void rasterset_out  (FILE * out_str  );
 
-yy_size_t rasterget_leng (void );
+int rasterget_leng (void );
 
 char *rasterget_text (void );
 
@@ -660,7 +668,12 @@ static int input (void );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k */
+#define YY_READ_BUF_SIZE 16384
+#else
 #define YY_READ_BUF_SIZE 8192
+#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -668,7 +681,7 @@ static int input (void );
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO fwrite( rastertext, rasterleng, 1, rasterout )
+#define ECHO do { if (fwrite( rastertext, rasterleng, 1, rasterout )) {} } while (0)
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -679,7 +692,7 @@ static int input (void );
 	if ( YY_CURRENT_BUFFER_LVALUE->yy_is_interactive ) \
 		{ \
 		int c = '*'; \
-		yy_size_t n; \
+		size_t n; \
 		for ( n = 0; n < max_size && \
 			     (c = getc( rasterin )) != EOF && c != '\n'; ++n ) \
 			buf[n] = (char) c; \
@@ -761,10 +774,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 53 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 53 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 
 
-#line 768 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/flex_qgsrastercalclexer.cpp"
+#line 781 "C:/builds/nextgisqgis-dev/qgis/src/analysis/flex_qgsrastercalclexer.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -845,112 +858,112 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 55 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 55 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { rasterlval.op = QgsRasterCalcNode::opSQRT; return FUNCTION;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 56 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 56 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { rasterlval.op = QgsRasterCalcNode::opSIN; return FUNCTION;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 57 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 57 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { rasterlval.op = QgsRasterCalcNode::opCOS; return FUNCTION;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 58 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 58 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { rasterlval.op = QgsRasterCalcNode::opTAN; return FUNCTION;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 59 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 59 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { rasterlval.op = QgsRasterCalcNode::opASIN; return FUNCTION;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 60 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 60 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { rasterlval.op = QgsRasterCalcNode::opACOS; return FUNCTION;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 61 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 61 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { rasterlval.op = QgsRasterCalcNode::opATAN; return FUNCTION;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 62 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 62 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { rasterlval.op = QgsRasterCalcNode::opLOG; return FUNCTION;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 63 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 63 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { rasterlval.op = QgsRasterCalcNode::opLOG10; return FUNCTION;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 65 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 65 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { return AND; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 66 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 66 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { return OR; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 67 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 67 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { return NE; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 68 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 68 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { return LE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 69 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 69 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { return GE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 71 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 71 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { return rastertext[0]; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 74 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 74 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { return rastertext[0]; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 76 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 76 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { rasterlval.number  = atof(rastertext); return NUMBER; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 78 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 78 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { return RASTER_BAND_REF; }
 	YY_BREAK
 case 19:
 /* rule 19 can match eol */
 YY_RULE_SETUP
-#line 80 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 80 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 { return RASTER_BAND_REF; }
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 82 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 82 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 /* skip blanks and tabs */
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 83 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 83 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 ECHO;
 	YY_BREAK
-#line 954 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/flex_qgsrastercalclexer.cpp"
+#line 967 "C:/builds/nextgisqgis-dev/qgis/src/analysis/flex_qgsrastercalclexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1137,7 +1150,7 @@ static int yy_get_next_buffer (void)
 
 	else
 		{
-			yy_size_t num_to_read =
+			int num_to_read =
 			YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
 
 		while ( num_to_read <= 0 )
@@ -1151,7 +1164,7 @@ static int yy_get_next_buffer (void)
 
 			if ( b->yy_is_our_buffer )
 				{
-				yy_size_t new_size = b->yy_buf_size * 2;
+				int new_size = b->yy_buf_size * 2;
 
 				if ( new_size <= 0 )
 					b->yy_buf_size += b->yy_buf_size / 8;
@@ -1182,7 +1195,7 @@ static int yy_get_next_buffer (void)
 
 		/* Read in more data. */
 		YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
-			(yy_n_chars), num_to_read );
+			(yy_n_chars), (size_t) num_to_read );
 
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
 		}
@@ -1304,7 +1317,7 @@ static int yy_get_next_buffer (void)
 
 		else
 			{ /* need more input */
-			yy_size_t offset = (yy_c_buf_p) - (yytext_ptr);
+			int offset = (yy_c_buf_p) - (yytext_ptr);
 			++(yy_c_buf_p);
 
 			switch ( yy_get_next_buffer(  ) )
@@ -1328,7 +1341,7 @@ static int yy_get_next_buffer (void)
 				case EOB_ACT_END_OF_FILE:
 					{
 					if ( rasterwrap( ) )
-						return 0;
+						return EOF;
 
 					if ( ! (yy_did_buffer_switch_on_eof) )
 						YY_NEW_FILE;
@@ -1576,7 +1589,7 @@ void rasterpop_buffer_state (void)
  */
 static void rasterensure_buffer_stack (void)
 {
-	yy_size_t num_to_alloc;
+	int num_to_alloc;
     
 	if (!(yy_buffer_stack)) {
 
@@ -1668,16 +1681,17 @@ YY_BUFFER_STATE raster_scan_string (yyconst char * yystr )
 
 /** Setup the input buffer state to scan the given bytes. The next call to rasterlex() will
  * scan from a @e copy of @a bytes.
- * @param bytes the byte buffer to scan
- * @param len the number of bytes in the buffer pointed to by @a bytes.
+ * @param yybytes the byte buffer to scan
+ * @param _yybytes_len the number of bytes in the buffer pointed to by @a bytes.
  * 
  * @return the newly allocated buffer state object.
  */
-YY_BUFFER_STATE raster_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len )
+YY_BUFFER_STATE raster_scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
 {
 	YY_BUFFER_STATE b;
 	char *buf;
-	yy_size_t n, i;
+	yy_size_t n;
+	int i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = _yybytes_len + 2;
@@ -1759,7 +1773,7 @@ FILE *rasterget_out  (void)
 /** Get the length of the current token.
  * 
  */
-yy_size_t rasterget_leng  (void)
+int rasterget_leng  (void)
 {
         return rasterleng;
 }
@@ -1907,7 +1921,7 @@ void rasterfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 83 "/Users/Bishop/work/projects/borsch/qgis/src/analysis/raster/qgsrastercalclexer.ll"
+#line 83 "C:/builds/nextgisqgis-dev/qgis/src/analysis/raster/qgsrastercalclexer.ll"
 
 
 
