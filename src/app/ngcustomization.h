@@ -75,6 +75,8 @@ protected:
     virtual bool fileSave() override;
     virtual void fileSaveAs() override;
 
+    virtual void toggleMapTips( bool enabled );
+
 private:   
     bool mUpdatesCheckStartByUser;
     NGQgisUpdater* mNGUpdater;

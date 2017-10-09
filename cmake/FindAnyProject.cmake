@@ -148,9 +148,26 @@ function(find_anyproject name)
                 set(${name}_LIBRARY ${${UPPER_NAME}_LIBRARY})
             endif()
 
+            if(${name}_BINARY_PATH)
+                set(${UPPER_NAME}_BINARY_PATH ${${name}_BINARY_PATH})
+            endif()
+            if(${UPPER_NAME}_BINARY_PATH)
+                set(${name}_BINARY_PATH ${${UPPER_NAME}_BINARY_PATH})
+            endif()
+
             if(FOUND_WITH_CONFIG_MODE)
                 message(STATUS "Found ${name} in package repository: ${${UPPER_NAME}_LIBRARY} (found version \"${${UPPER_NAME}_VERSION}\")")
             endif()
+
+            if(${UPPER_NAME} STREQUAL "QCA")
+                if(TARGET qca)
+                    get_target_property(${name}_INCLUDE_DIR qca INTERFACE_INCLUDE_DIRECTORIES)
+                    get_target_property(${name}_LIBRARY qca IMPORTED_SONAME_DEBIAN)
+                    set(${UPPER_NAME}_INCLUDE_DIR ${${name}_INCLUDE_DIR})
+                    set(${UPPER_NAME}_LIBRARY ${${name}_LIBRARY})
+                endif()
+            endif()
+
         endif()
 
         #message(STATUS "VERSION_STRING ${VERSION_STRING} ${${VERSION_STRING}}")
@@ -172,6 +189,9 @@ function(find_anyproject name)
             if(${UPPER_NAME}_VERSION)
                 set(${UPPER_NAME}_VERSION ${${UPPER_NAME}_VERSION} CACHE INTERNAL "library ${name} version")
                 set(${UPPER_NAME}_VERSION_STR ${${UPPER_NAME}_VERSION} CACHE INTERNAL "library ${name} version")
+            endif()
+            if(${UPPER_NAME}_BINARY_PATH)
+                set(${UPPER_NAME}_BINARY_PATH ${${UPPER_NAME}_BINARY_PATH} CACHE INTERNAL "binary ${name}")
             endif()
 
             mark_as_advanced(${IS_FOUND}

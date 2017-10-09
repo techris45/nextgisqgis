@@ -60,7 +60,7 @@ const QString NGQgisUpdater::updateProgrammPath()
     return NGQgsApplication::prefixPath() + QDir::separator() +
             "nextgisupdater.app/Contents/MacOS/nextgisupdater";
 #else
-#error "Linux is not supported yet!"
+// #error "Linux is not supported yet!"
 #endif
 }
 

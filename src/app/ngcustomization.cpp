@@ -800,7 +800,7 @@ void NGQgisApp::createActions()
   connect( mActionZoomLast, SIGNAL( triggered() ), this, SLOT( zoomToPrevious() ) );
   connect( mActionZoomNext, SIGNAL( triggered() ), this, SLOT( zoomToNext() ) );
   connect( mActionZoomActualSize, SIGNAL( triggered() ), this, SLOT( zoomActualSize() ) );
-  connect( mActionMapTips, SIGNAL( triggered() ), this, SLOT( toggleMapTips() ) );
+  connect( mActionMapTips, SIGNAL( triggered(bool) ), this, SLOT( toggleMapTips(bool) ) );
   connect( mActionNewBookmark, SIGNAL( triggered() ), this, SLOT( newBookmark() ) );
   connect( mActionShowBookmarks, SIGNAL( triggered() ), this, SLOT( showBookmarks() ) );
   connect( mActionDraw, SIGNAL( triggered() ), this, SLOT( refreshMapCanvas() ) );
@@ -930,8 +930,7 @@ void NGQgisApp::createActions()
 //  connect( mActionHelpAPI, SIGNAL( triggered() ), this, SLOT( apiDocumentation() ) );
   connect( mActionReportaBug, SIGNAL( triggered() ), this, SLOT( reportaBug() ) );
   connect( mActionNeedSupport, SIGNAL( triggered() ), this, SLOT( supportProviders() ) );
-  connect( mActionQgisHomePage, SIGNAL( triggered() ), this, SLOT( helpQgisHomePage() ) );
-  connect( mActionCheckQgisVersion, SIGNAL( triggered() ), this, SLOT( checkQgisVersion() ) );
+  connect( mActionQgisHomePage, SIGNAL( triggered() ), this, SLOT( helpQgisHomePage() ) ); 
   connect( mActionAbout, SIGNAL( triggered() ), this, SLOT( about() ) );
 //  connect( mActionSponsors, SIGNAL( triggered() ), this, SLOT( sponsors() ) );
 
@@ -942,9 +941,12 @@ void NGQgisApp::createActions()
   connect( mActionRotateLabel, SIGNAL( triggered() ), this, SLOT( rotateLabel() ) );
   connect( mActionChangeLabelProperties, SIGNAL( triggered() ), this, SLOT( changeLabelProperties() ) );
 
-  QSettings settings;
-  if( settings.value( "/qgis/checkVersion", true ).toBool() )
-    connect( this, SIGNAL( initializationCompleted() ), this, SLOT(checkQgisVersion()));
+  #ifndef Q_OS_LINUX
+    connect( mActionCheckQgisVersion, SIGNAL( triggered() ), this, SLOT( checkQgisVersion() ) );
+    QSettings settings;
+    if( settings.value( "/qgis/checkVersion", true ).toBool() )
+      connect( this, SIGNAL( initializationCompleted() ), this, SLOT(checkQgisVersion()));
+  #endif
 
 
 #ifndef HAVE_POSTGRESQL
@@ -2948,6 +2950,22 @@ void NGQgisApp::fileSaveAs()
                            QMessageBox::Ok,
                            Qt::NoButton );
   }
+}
+
+void NGQgisApp::toggleMapTips( bool enabled )
+{
+  mMapTipsVisible = enabled;
+  // Store if maptips are active
+  QSettings().setValue( "/qgis/enableMapTips", mMapTipsVisible );
+
+  // if off, stop the timer
+  if ( !mMapTipsVisible )
+  {
+    mpMapTipsTimer->stop();
+  }
+
+  if ( mActionMapTips->isChecked() != mMapTipsVisible )
+    mActionMapTips->setChecked( mMapTipsVisible );
 }
 
 void NGQgisApp::projectProperties()
