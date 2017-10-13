@@ -102,8 +102,6 @@
 
 #include "ngsaboutdialog.h"
 
-#include "ngupdater.h"
-
 #ifdef Q_OS_MACX
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
@@ -946,6 +944,8 @@ void NGQgisApp::createActions()
     QSettings settings;
     if( settings.value( "/qgis/checkVersion", true ).toBool() )
       connect( this, SIGNAL( initializationCompleted() ), this, SLOT(checkQgisVersion()));
+  #else
+    mHelpMenu->removeAction( mActionCheckQgisVersion );
   #endif
 
 
@@ -2004,7 +2004,6 @@ void NGQgisApp::checkQgisVersion()
 
   connect( versionInfo, SIGNAL( versionInfoAvailable() ), this, SLOT( versionReplyFinished() ) );
   versionInfo->checkVersion();*/
-
   QObject* obj = sender();
   mUpdatesCheckStartByUser = (obj == mActionCheckQgisVersion);
   

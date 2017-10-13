@@ -79,6 +79,15 @@ QgsOptions::QgsOptions( QWidget *parent, Qt::WindowFlags fl )
 {
   setupUi( this );
 
+#ifdef Q_OS_LINUX
+  /*
+   * NextGIS. Disable option for Ubuntu
+   */
+  cbxCheckVersion->setVisible(false);
+  line_2->setVisible(false);
+  horizontalLayout_29->addWidget(new QLabel(this));
+#endif
+
   // QgsOptionsDialogBase handles saving/restoring of geometry, splitter and current tab states,
   // switching vertical tabs between icon/text to icon-only modes (splitter collapsed to left),
   // and connecting QDialogButtonBox's accepted/rejected signals to dialog's accept/reject slots
