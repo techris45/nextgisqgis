@@ -263,7 +263,7 @@ NGQgisApp::NGQgisApp(QSplashScreen *splash, bool restorePlugins,
     endProfile();
 
     addDockWidget( Qt::LeftDockWidgetArea, mUndoDock );
-    mUndoWidget->hide();
+    mUndoDock->hide();
     
     startProfile( "Layer Style dock" );
     mMapStylingDock = new QgsDockWidget( this );
